@@ -74,7 +74,7 @@ const mag1 = new Magician({
 });
 
 console.log(mag1.attack);
-
+kg
 console.log((mag1.stoned = true));
 console.log(`Атакую на расстоянии ${(mag1.attack = 5)}-х клеток`);
 console.log(`Сила атаки составила ${mag1.attack} баллов`);
