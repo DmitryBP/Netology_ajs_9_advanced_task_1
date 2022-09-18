@@ -23,41 +23,17 @@ attack - log2(x) * 5, где x - это расстояние в клетках. 
 Не забудьте написать unit-тесты, которые обеспечивают 100% покрытие функций и классов,
 которые вы тестируете.
  */
-
+/*
+Я бы сначала вычислил значение атаки в зависимости от дистанции (назвать например attackDist)
+ и сохранит ев переменную, затем атаку с учетом stoned (а она зависит от attackDist),
+ и уже после вычислить финальное значение атаки. Вместо кучи условий if-else
+ */
 class Magician {
   constructor(options) {
     this.name = options.name;
     this._attack = options.attack;
-    this._stone = false;
-  }
-
-  set attack(distance) {
-    if (distance === 1 && this._stone === false) {
-      this._attack *= 1;
-    } else if (distance === 2 && this._stone === false) {
-      this._attack *= 0.9;
-    } else if (distance === 3 && this._stone === false) {
-      this._attack *= 0.8;
-    } else if (distance === 4 && this._stone === false) {
-      this._attack *= 0.7;
-    } else if (distance === 5 && this._stone === false) {
-      this._attack *= 0.6;
-    } else if (distance === 1 && this._stone === true) {
-      // attack - log2(x) * 5
-      this._attack -= Math.log2(1) * 5;
-    } else if (distance === 2 && this._stone === true) {
-      this._attack = this._attack * 0.9 - Math.log2(2) * 5;
-    } else if (distance === 3 && this._stone === true) {
-      this._attack = this._attack * 0.8 - Math.log2(3) * 5;
-    } else if (distance === 4 && this._stone === true) {
-      this._attack = this._attack * 0.7 - Math.log2(4) * 5;
-    } else if (distance === 5 && this._stone === true) {
-      this._attack = this._attack * 0.6 - Math.log2(5) * 5;
-    } else throw new Error('Ход должен быть от 1 до 5 клеток');
-  }
-
-  get attack() {
-    return this._attack;
+    this.stoned = options.stoned;
+    this.factor = [1, 0.9, 0.8, 0.7, 0.6];
   }
 
   set stoned(boolian) {
@@ -71,14 +47,30 @@ class Magician {
   get stoned() {
     return this._stone;
   }
+
+  set attack(distance) {
+    if (distance > 0 && distance <= 5 && this.stoned === false) {
+      this._attack *= this.factor[distance - 1];
+    } else if (distance > 0 && distance <= 5 && this.stoned === true) {
+      this._attack = this._attack * this.factor[distance - 1] - Math.log2(distance) * 5;
+    } else throw new Error('Ход должен быть от 1 до 5 клеток');
+  }
+
+  get attack() {
+    return this._attack;
+  }
 }
+
 const mag1 = new Magician({
   name: 'pendalf',
   attack: 100,
-  stoned: false,
+  stoned: true,
 });
 
-console.log(mag1.attack);
-console.log((mag1.stoned = true));
-console.log(`Атакую на расстоянии ${(mag1.attack = 5)}-х клеток`);
-console.log(`Сила атаки составила ${mag1.attack} баллов`);
+// mag1.attack = 5;
+mag1.stoned = false;
+mag1.attack = 2;
+// console.log(mag1.stoned);
+// console.log(mag1.attack);
+// console.log(`Атакую на расстоянии ${(mag1.attack = 5)}-х клеток`);
+// console.log(`Сила атаки составила ${mag1.attack} баллов`);
