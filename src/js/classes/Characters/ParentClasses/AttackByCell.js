@@ -30,6 +30,7 @@ export default class AttackByCell extends Character {
 
     if (this.stoned) {
       this.resultAttack -= Math.log2(cell) * 5;
+      this.resultAttack = Math.max(0, this.resultAttack)
     }
   }
 

@@ -249,4 +249,9 @@ describe("Настройка атаки мага и демона", () => {
     someMag.attackOnDistance = 2;
     expect(someMag.attackOnDistance).toBe(4);
   });
+  test("Атака не снижается ниже нуля", () => {
+    someMag.stoned = true;
+    someMag.attackOnDistance = 5;
+    expect(someMag.attackOnDistance).toBeGreaterThanOrEqual(0);
+  });
 });
