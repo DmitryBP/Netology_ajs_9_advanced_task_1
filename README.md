@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/hv88j854p6udf4u7?svg=true)](https://ci.appveyor.com/project/DmitryBP/netology-ajs-9-advanced-task-1)
+
 # Домашнее задание к лекции «`ArrayBuffer`»
 
 **Важно**: каждая задача выполняется в виде отдельного проекта с собственным GitHub репозиторием.
