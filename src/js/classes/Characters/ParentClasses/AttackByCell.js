@@ -5,39 +5,35 @@ export default class AttackByCell extends Character {
     super(name, type);
 
     this.isStoned = false;
+    this.baseAttack = this.attack;
   }
 
-  set attackFactor(cell) {
-    if (cell < 1 || cell > 5) {
-      throw new Error("Введите значение от 1 до 5");
-    }
-
-    if (!(this instanceof AttackByCell)) {
-      throw new Error("attackFactor доступен только магу и демону");
-    }
-    const factor = [0, 1, 0.9, 0.8, 0.7, 0.6];
-
-    if (!this.stoned) {
-      this.attack = this.attack * factor[cell];
-    } 
-    else {
-      this.attack = this.attack * factor[cell] - Math.log2(cell) * 5;
-    }
-  }
-
-  get attackFactor() {
-    return this.attack;
-  }
-
-  set stoned(boolian) {
-    if (typeof boolian !== "boolean") {
+  set stoned(value) {
+    if (typeof value !== "boolean") {
       throw new Error("Метод принимате заничения true или false");
     }
-    this.isStoned = boolian;
+    this.isStoned = value;
   }
 
   get stoned() {
     return this.isStoned;
   }
-}
 
+  set attackOnDistance(cell) {
+    if (cell < 1 || cell > 5) {
+      throw new Error("Введите значение от 1 до 5");
+    }
+
+    const factor = [1, 0.9, 0.8, 0.7, 0.6];
+
+    this.resultAttack = this.baseAttack * factor[cell - 1];
+
+    if (this.stoned) {
+      this.resultAttack -= Math.log2(cell) * 5;
+    }
+  }
+
+  get attackOnDistance() {
+    return this.resultAttack;
+  }
+}

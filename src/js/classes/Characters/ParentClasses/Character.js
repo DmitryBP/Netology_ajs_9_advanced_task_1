@@ -1,4 +1,3 @@
-
 export default class Character {
   constructor(name, type) {
     const typeList = {
@@ -40,9 +39,9 @@ export default class Character {
     this.health = Math.max(0, this.health - points * (1 - this.defence / 100));
   }
 
-  set attackFactor(value) {
-    throw new Error("attackFactor доступен только для магических персонажей");
+  set attackOnDistance(value) {
+    throw new Error(
+      "attackOnDistance доступен только для магических персонажей"
+    );
   }
 }
-
-

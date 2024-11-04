@@ -220,20 +220,33 @@ describe("Настройка атаки мага и демона", () => {
 
   beforeEach(() => {
     someMag = new Magician("Pendalf");
-    someBowman = new Bowman('Dima')
+    someBowman = new Bowman("Dima");
   });
   test("Сила атаки мага и демона снижается в зависимлсти от удаленности цели", () => {
-    someMag.attackFactor = 5;
-    expect(someMag.attackFactor).toBe(6);
+    someMag.attackOnDistance = 1;
+    expect(someMag.attackOnDistance).toBe(10);
+    someMag.attackOnDistance = 2;
+    expect(someMag.attackOnDistance).toBe(9);
   });
   test("Метод доступен только магу и демону", () => {
     expect(() => {
-      someBowman.attackFactor = 5;
+      someBowman.attackOnDistance = 5;
     }).toThrow();
+  });
+  test("Допускается ходить на 1-5 клеток", () => {
+    expect(() => {
+      someMag.attackOnDistance = 6;
+    }).toThrow("Введите значение от 1 до 5");
+  });
+
+  test("Метод stoned принимате или true или false", () => {
+    expect(() => {
+      someMag.stoned = "someValue";
+    }).toThrow("Метод принимате заничения true или false");
   });
   test("Дурман снижает силу атаки", () => {
     someMag.stoned = true;
-    someMag.attackFactor = 2;
-    expect(someMag.attackFactor).toBe(4);
+    someMag.attackOnDistance = 2;
+    expect(someMag.attackOnDistance).toBe(4);
   });
 });
